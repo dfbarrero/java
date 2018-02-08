@@ -1,0 +1,7 @@
+Width rectOne: 100
+Height rectOne: 200
+Area rectOne: 20000
+X rectTwo: 23
+Y rectTwo: 94
+X rectTwo: 40
+Y rectTwo: 72
