@@ -1,0 +1,4 @@
+Exception in thread "main" java.lang.IllegalArgumentException:
+        at org.ph.training.Class2.call(Class2.java:12)
+        at org.ph.training.Class1.call(Class1.java:14)
+        at org.ph.training.JavaSTSimulator.main(JavaSTSimulator.java:20)
