@@ -1,0 +1,152 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     enunciado.tex:    Enunciado de la práctica 2 de GIEAI-Informática
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[english,a4paper,11pt]{article}
+
+\usepackage[latin1]{inputenc}  % codificación de caracteres de este archivo
+\usepackage[spanish]{babel}    % Traducir: ``abstract'' ---> ``resumen''   etc.
+\usepackage{fancyhdr}          % páginas con cabecera y pie
+\usepackage{listings}          % listados de código fuente
+\usepackage{float}             % para que los listados floten como las figuras
+\usepackage{vmargin}           % ajuste de márgenes fácil de usar
+\usepackage[T1]{fontenc}       % meter fuentes vectoriales
+\usepackage{graphicx}          % figuras
+\usepackage{upquote}           % comilla recta con \textquotesingle
+\usepackage{placeins}          % orden \FloatBarrier para mantener figuras a raya
+
+\usepackage[implicit=false]{hyperref}  % enlaces web (el parámetro implicit=false
+                                       % evita problemas con el # de #include etc.)
+                                       % uso explícito: \href[options]{URL}{text}
+                                       %                \url{URL}
+
+% mis abreviaturas
+\newcommand{\C}{\texttt{C}}            % escribirá \C en lugar de \texttt{C}
+\newcommand{\Pascal}{\texttt{Pascal}}  % idem con \Pascal ...
+\newcommand{\fun}[1]{\texttt{#1()}}    % "\fun{main}" ---> "main()" en letra typewriter
+\newcommand{\hex}[1]{\texttt{#1}$_{hex}$}
+\newcommand{\bin}[1]{\texttt{#1}$_{bin}$}
+\newcommand{\enesimo}{\mbox{n-ésimo}}
+\newcommand{\muvision}{\textit{$\mu\!$Vision4}}
+\newcommand{\keilmuvision}{\textit{Keil}~\muvision}
+\newcommand{\codigo}[1]{\texttt{#1}}
+\newcommand{\menu}[1]{\textit{#1}}
+
+% Órdenes para alternar entre el estilo español (ligera separación extra
+% entre párrafos) y el estilo por defecto (párrafos junticos junticos)
+\newcommand{\parrafosjuntos}{\setlength{\parskip}{0pt}}
+\newcommand{\parrafosseparados}{\setlength{\parskip}{1.5ex plus 0.6ex minus 0.5ex}}
+
+% datos importantes del documento
+\newcommand{\titulo}{Práctica 5: Bucle principal de un juego}     % <<--- TÍTULO
+\newcommand{\asignatura}{Tecnología de Videojuegos}
+\newcommand{\institucion}{UAH, Departamento de Automática, ATC-SOL}
+\newcommand{\paginaweb}{http://atc1.aut.uah.es}
+
+% portada
+\title{\asignatura \\ \titulo}
+\author{\institucion \\ \url{\paginaweb}}
+\date{\fecha}
+
+% márgenes un poco más finos
+\setmargrb{25mm}{20mm}{25mm}{20mm}    % left, top, right, bottom
+
+% encabezado y pie
+\pagestyle{fancy}
+\lhead{\footnotesize \parbox{11cm}{\asignatura}}
+\lfoot{\footnotesize \parbox{11cm}{\institucion}}
+\cfoot{}
+\rhead{\footnotesize \titulo}
+\rfoot{\footnotesize Página \thepage}
+\renewcommand{\headheight}{24pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%\renewcommand{\headrulewidth}{0pt}
+
+% listados de código fuente flotantes
+%\newfloat{floatlisting}{h}{}
+%\floatname{floatlisting}{Listado}
+
+% estilo de los listados de código
+\lstset{numbers=left,                 % números de línea
+        numberstyle=\tiny,            % tamaño de los num. de línea
+        extendedchars=true,           % acentos, eñes...
+        %frame=single,                 % marco que encuadra al listado
+        basicstyle=\footnotesize\ttfamily,   % tipo de letra
+        showstringspaces=false}       % no mostrar espacios de las cadenas
+
+\graphicspath{{figs/}}                % ruta de las figuras
+
+\begin{document} % ------------------ Aquí empieza el documento ----------------------
+
+% redefinir el nombre de algunas cosas
+\renewcommand{\tablename}{Tabla}                  % mejor "Tabla" que "Cuadro"
+\renewcommand{\listtablename}{Indice de tablas}
+% definidos originalmene en:
+%/usr/share/texmf-texlive/tex/generic/babel/spanish.ldf
+
+\maketitle              % montar el título aquí­ con los parámetros definidos arriba
+\thispagestyle{empty}   % no poner número de página ni nada de nada en la 1ª página
+
+\renewcommand{\abstractname}{}         % eliminar "Resumen"
+\begin{abstract}                       % resumen (sin la palabra "Resumen")
+\noindent \textbf{Objetivos:}
+\begin{itemize}
+\item Implementar el bucle principal de un videojuego
+\item Diseñar una pequeña jerarquía de objetos
+\item Implementar la lógica princpal de un videojuego
+\item Utilizar métodos y atributos estáticos
+\end{itemize}
+\end{abstract}
+
+\sloppy              % hacer más flexible el cálculo del espacio entre palabras para
+                     % evitar errores de tipo "overfull box"
+                     % (lo contrario de \sloppy es \fussy)
+
+\parrafosseparados   % separación entre párrafos (por defecto saldrán pegados)
+
+\subsection*{Comentario inicial}
+El objetivo de esta práctica es implementar el bucle principal de un videojuego. Para ello se ampliará la jerarquía de clases desarrollada hasta el momento para introducir nuevas clases, incluyendo una clase que realice la visualización en modo texto del mapa del juego. Finalmente se implementará el bucle princpal del videojuego.
+
+El resultado final será un RPG rudimentario  en modo texto que visualiza un mapa en forma de matriz de 20x20. Dentro de esa matriz se situará el jugador con un personaje de su elección, así como una serie de enemigos y monedas de oro, plata o bronce con distinta puntuación. El objetivo del juego es obtener la máxima puntuación recogiendo las monedas, para lo que el jugador tendrá que desplazarse por la cuadrícula evadiento a los enemigos. Si enemigos y jugador coinciden lucharán siguiendo el esquema desarrollado en prácticas anteriores.
+
+\subsection*{Ejercicio 1}
+Expanda la clase \texttt{Personaje} como se detalla a continuación:
+
+\begin{enumerate}
+\item Añada dos campos privados \texttt{private int x} y \texttt{private int y} que contendrán la posición del personaje dentro del mapa.
+\item Implemente un método \texttt{public void setPosicion(int x, int y)}.
+\item Implemente métodos que permitan el movimiento del personaje: \texttt{moverArriba()}, \texttt{moverAbajo()}, \texttt{moverDerecha()} y \texttt{moverIzquierda()}, que desplazan una posición en el sentido indicado. Suponga que el mapa es toroidal y que sus dimensiones vienen dadas por la clase \texttt{Mapa}, implementada en el ejercicio 3.  
+\item Añada un nuevo campo \texttt{private int puntuacion} que contendrá la puntuación del personaje. Introduzca los métodos asociados \texttt{public void aumentarPuntuacion(int puntos)} y \texttt{public int getPuntuacion()}. Inicialmente la puntuación del personaje será cero.
+\end{enumerate}
+
+\subsection*{Ejercicio 2}
+Diseñe e implemente una nueva jerarquía de clases, dentro del paquete \texttt{p3.monedas}, que represente a las monedas dispersas en el mapa. Las monedas pueden ser de oro, plata y bronce, tendrán una puntuación asociada al tipo de moneda (4, 2 y 1 respectivamente) que se tiene que poder consultar externamente, y contendrán métodos que permitan ubicar las monedas dentro del mapa. Consulte con el profesor del laboratorio si tiene dudas sobre cómo implementar la jerarquía.
+
+\subsection*{Ejercicio 3}
+Implemente una nueva clase llamada \texttt{Mapa}, dentro del paquete \texttt{p3}. Esta clase se encargará de visualizar el mapa del juego. Para ello contendrá dos atributos estáticos públicos para indicar el número de columnas y filas del mapa, y un único método (también estático) \texttt{visualizarMapa}, al que se pasará como argumentos una lista de las monedas dispersas en el mapa, otra lista con los enemigos y un objeto que representa al propio personaje del juego.
+
+¿Por qué se definen tanto los campos como el método de la clase \texttt{Mapa} como estáticos? ¿qué ventajas aporta?
+
+Sugerencia: Utilice código desarrollado en prácticas anteriores para representar el mapa.
+
+\subsection*{Ejercicio 4}
+Modifique la clase \texttt{Juego} desarrollada en la práctica anterior para contener el bucle principal del videojuego, que viene detallado a continuación:
+
+\begin{enumerate}
+\item Preguntar al usuario su nombre y qué tipo de personaje quiere jugar.
+\item Crear el persona.
+\item Crear aleatoriamente enemigos y monedas\footnote{Mirar clase \texttt{Random} en Internet.}
+\item Visualizar el mapa.
+\item Pedir al jugador un movimiento (arriba, abajo, izquierda o derecha)
+\item Implementar la acción del jugador (mover personaje, detectar colisiones, etc)
+\item Mover aleatoriamente a los enemigos (mirar clase \texttt{Random} en Internet)
+\item Detectar colisiones de enemigos con el jugador.
+\item Visualizar el mapa.
+\item Volver a 5.
+\end{enumerate}
+
+En caso de que el jugador se mueva a donde hay una moneda, se añade la puntuación correspondiente, y se borra la moneda del mapa. En caso de que el jugador coincida con un enemigo se inicia un combate.
+
+Para modularizar mejor el el código, introduzca la lógica anterior dentro de los métodos \texttt{private void inicializarJuego()} y \texttt{private void actualizarJuego()}.
+
+\end{document} 

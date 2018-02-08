@@ -1,0 +1,147 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     enunciado.tex:    Enunciado de la práctica 2 de GIEAI-Informática
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[english,a4paper,11pt]{article}
+
+\usepackage[latin1]{inputenc}  % codificación de caracteres de este archivo
+\usepackage[spanish]{babel}    % Traducir: ``abstract'' ---> ``resumen''   etc.
+\usepackage{fancyhdr}          % páginas con cabecera y pie
+\usepackage{listings}          % listados de código fuente
+\usepackage{float}             % para que los listados floten como las figuras
+\usepackage{vmargin}           % ajuste de márgenes fácil de usar
+\usepackage[T1]{fontenc}       % meter fuentes vectoriales
+\usepackage{graphicx}          % figuras
+\usepackage{upquote}           % comilla recta con \textquotesingle
+\usepackage{placeins}          % orden \FloatBarrier para mantener figuras a raya
+
+\usepackage[implicit=false]{hyperref}  % enlaces web (el parámetro implicit=false
+                                       % evita problemas con el # de #include etc.)
+                                       % uso explícito: \href[options]{URL}{text}
+                                       %                \url{URL}
+
+% mis abreviaturas
+\newcommand{\C}{\texttt{C}}            % escribirá \C en lugar de \texttt{C}
+\newcommand{\Pascal}{\texttt{Pascal}}  % idem con \Pascal ...
+\newcommand{\fun}[1]{\texttt{#1()}}    % "\fun{main}" ---> "main()" en letra typewriter
+\newcommand{\hex}[1]{\texttt{#1}$_{hex}$}
+\newcommand{\bin}[1]{\texttt{#1}$_{bin}$}
+\newcommand{\enesimo}{\mbox{n-ésimo}}
+\newcommand{\muvision}{\textit{$\mu\!$Vision4}}
+\newcommand{\keilmuvision}{\textit{Keil}~\muvision}
+\newcommand{\codigo}[1]{\texttt{#1}}
+\newcommand{\menu}[1]{\textit{#1}}
+
+% Órdenes para alternar entre el estilo español (ligera separación extra
+% entre párrafos) y el estilo por defecto (párrafos junticos junticos)
+\newcommand{\parrafosjuntos}{\setlength{\parskip}{0pt}}
+\newcommand{\parrafosseparados}{\setlength{\parskip}{1.5ex plus 0.6ex minus 0.5ex}}
+
+% datos importantes del documento
+\newcommand{\titulo}{Práctica 6: Patrones de diseño}     % <<--- TÍTULO
+\newcommand{\asignatura}{Tecnología de Videojuegos}
+\newcommand{\institucion}{UAH, Departamento de Automática, ATC-SOL}
+\newcommand{\paginaweb}{http://atc1.aut.uah.es}
+
+% portada
+\title{\asignatura \\ \titulo}
+\author{\institucion \\ \url{\paginaweb}}
+\date{\fecha}
+
+% márgenes un poco más finos
+\setmargrb{25mm}{20mm}{25mm}{20mm}    % left, top, right, bottom
+
+% encabezado y pie
+\pagestyle{fancy}
+\lhead{\footnotesize \parbox{11cm}{\asignatura}}
+\lfoot{\footnotesize \parbox{11cm}{\institucion}}
+\cfoot{}
+\rhead{\footnotesize \titulo}
+\rfoot{\footnotesize Página \thepage}
+\renewcommand{\headheight}{24pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%\renewcommand{\headrulewidth}{0pt}
+
+% listados de código fuente flotantes
+%\newfloat{floatlisting}{h}{}
+%\floatname{floatlisting}{Listado}
+
+% estilo de los listados de código
+\lstset{numbers=left,                 % números de línea
+        numberstyle=\tiny,            % tamaño de los num. de línea
+        extendedchars=true,           % acentos, eñes...
+        %frame=single,                 % marco que encuadra al listado
+        basicstyle=\footnotesize\ttfamily,   % tipo de letra
+        showstringspaces=false}       % no mostrar espacios de las cadenas
+
+\graphicspath{{figs/}}                % ruta de las figuras
+
+\begin{document} % ------------------ Aquí empieza el documento ----------------------
+
+% redefinir el nombre de algunas cosas
+\renewcommand{\tablename}{Tabla}                  % mejor "Tabla" que "Cuadro"
+\renewcommand{\listtablename}{Indice de tablas}
+% definidos originalmene en:
+%/usr/share/texmf-texlive/tex/generic/babel/spanish.ldf
+
+\maketitle              % montar el título aquí­ con los parámetros definidos arriba
+\thispagestyle{empty}   % no poner número de página ni nada de nada en la 1ª página
+
+\renewcommand{\abstractname}{}         % eliminar "Resumen"
+\begin{abstract}                       % resumen (sin la palabra "Resumen")
+\noindent \textbf{Objetivos:}
+\begin{itemize}
+\item Profundizar en la comprensión de los patrones de diseño
+\item Implementar algunos patrones sencillos ampliamente utilizados
+\item Saber identificar las situaciones en las que pueden aplicarse algunos patrones sencillos
+\item Comprender la relación entre cómo representamos los datos y la complejidad de los algoritmos resultantes
+\end{itemize}
+\end{abstract}
+
+\sloppy              % hacer más flexible el cálculo del espacio entre palabras para
+                     % evitar errores de tipo "overfull box"
+                     % (lo contrario de \sloppy es \fussy)
+
+\parrafosseparados   % separación entre párrafos (por defecto saldrán pegados)
+
+\subsection*{Comentario inicial}
+Los patrones de diseño son una herramienta extremadamente útil para realizar el diseño (desde la perspectiva de la programación) y la implementación de un videojuego. También son muy útiles en el desarrollo de cualquier aplicación orientada a objetos, siendo su utilización una competencia importante en el CV de un ingeniero que tenga labores de programación.
+
+En esta práctica vamos a ampliar la implementación del videojuego incorporando la utilización de varios patrones de diseño. Idealmente, se verá en qué mejora el código utilizando los patrones, y se comprenderán mejor.
+
+\subsection*{Ejercicio 1}
+¿Puedes identificar la aplicación de algún patrón de diseño en el código desarrollado hasta este momento?
+
+\subsection*{Ejercicio 2}
+Limite el número de instancias del juego que pueden ejecutarse a una, para ello aplique el patrón \textit{Singlenton} a la clase \texttt{Juego}. La aplicación de este patrón es muy sencilla. Defina el constructor de la clase \texttt{Juego} como privado, añada un atributo de tipo \texttt{Juego} inicialmente con valor \texttt[null] y un método estático llamado \texttt{getJuego()} que la devuelva instancia de juego. En caso de que no hubiese instancia de \texttt{Juego}, deberá crear una.
+
+Actividad adicional: Prueba a crear más de una instancia del juego para testear la corrección del código.
+
+\subsection*{Ejercicio 3}
+Centralice todo el código encargado de la creación tanto de los personajes como de las armas. Para ello vamos a utilizar el patrón \texttt{Factory}. Implemente dos clases, \texttt{PersonajeFactory} y \texttt{ArmaFactory}\footnote{Es habitual utilizar el nombre del patrón en inglés en el nombre de la clase para poder identificar el patrón aplicado con más facilidad.}, cada uno con los métodos estáticos \texttt{Personaje crearPersonaje(String tipo)} y \texttt{Arma crearArma(String tipo)}.
+
+\subsection*{Ejercicio 4}
+Aplique el patrón \texttt{Composite} para mantener un inventario de objetos distintos a las armas (por ejemplo pócimas, hechizos, monedas, llaves, etc). Implemente una pequeña jerarquía de clases con dichos objetos y cambie el código necesario para introducirlos en el mapa. Para simplificar la implementación, se sugiere crear una jerarquía de clases cuya raíz herede de una lista enlazada.
+
+\subsection*{Ejercicio 5 (opcional)}
+Las estructuras de datos definidas hasta el momento no tienen una organización geométrica, lo que complica la visualización del mapa. Vamos a añadir una capa con información geométrica a los datos de manera que simplifique la visualización del mapa. Para ello se aplicará el patrón \texttt{Observer}.
+
+Siga los siguientes pasos:
+
+\begin{enumerate}
+\item Cree una interfaz llamada \texttt{Posicion}, que contenga los dos métodos siguientes:
+
+\begin{itemize}
+\item \texttt{int getX()}: Devuelve la posición X.
+\item \texttt{int getY()}: Devuelve la posición Y.
+\end{itemize}
+
+\item Implemente la interfaz \texttt{Posicion}\footnote{La falta de tilde en el nombre de la clase es intencionada: Aunque Java permite utilizar tildes y eñe en el nombre de las clases, por lo general es mejor no utilizarlas para evitar problemas.} en todos los objetos que puedan situarse en el mapa (\texttt{Personaje}, \texttt{Arma}, \texttt{Moneda}, etc)
+
+\item Cree un nuevo atributo \texttt{posiciones}  en la clase \texttt{Mapa} de tipo matriz de interfaces \texttt{Posicion}.
+
+\item Aplique el patrón \texttt{Observer}: La clase \texttt{Mapa} debe implementar la interfaz \texttt{Observer} y la clases (\texttt{Personaje}, \texttt{Arma}, \texttt{Moneda}) deben heredar de la clase \texttt{Observable}. Cada vez que una de las clases observadas cambie su posición (x o y), se debe actualizar la clase \texttt{Mapa} para que lo posicione correctamente en la matriz. De esta manera, cada vez que cualquier objeto cambie de posición, automáticamente la clase \texttt{Mapa} actualizará la matriz  \texttt{posiciones}.
+
+\end{enumerate}
+
+\end{document} 

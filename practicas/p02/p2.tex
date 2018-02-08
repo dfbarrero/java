@@ -1,0 +1,161 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     enunciado.tex:    Enunciado de la práctica 2 de GIEAI-Informática
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[english,a4paper,11pt]{article}
+
+\usepackage[latin1]{inputenc}  % codificación de caracteres de este archivo
+\usepackage[spanish]{babel}    % Traducir: ``abstract'' ---> ``resumen''   etc.
+\usepackage{fancyhdr}          % páginas con cabecera y pie
+\usepackage{listings}          % listados de código fuente
+\usepackage{float}             % para que los listados floten como las figuras
+\usepackage{vmargin}           % ajuste de márgenes fácil de usar
+\usepackage[T1]{fontenc}       % meter fuentes vectoriales
+\usepackage{graphicx}          % figuras
+\usepackage{upquote}           % comilla recta con \textquotesingle
+\usepackage{placeins}          % orden \FloatBarrier para mantener figuras a raya
+
+\usepackage[implicit=false]{hyperref}  % enlaces web (el parámetro implicit=false
+                                       % evita problemas con el # de #include etc.)
+                                       % uso explícito: \href[options]{URL}{text}
+                                       %                \url{URL}
+
+% mis abreviaturas
+\newcommand{\C}{\texttt{C}}            % escribirá \C en lugar de \texttt{C}
+\newcommand{\Pascal}{\texttt{Pascal}}  % idem con \Pascal ...
+\newcommand{\fun}[1]{\texttt{#1()}}    % "\fun{main}" ---> "main()" en letra typewriter
+\newcommand{\hex}[1]{\texttt{#1}$_{hex}$}
+\newcommand{\bin}[1]{\texttt{#1}$_{bin}$}
+\newcommand{\enesimo}{\mbox{n-ésimo}}
+\newcommand{\muvision}{\textit{$\mu\!$Vision4}}
+\newcommand{\keilmuvision}{\textit{Keil}~\muvision}
+\newcommand{\codigo}[1]{\texttt{#1}}
+\newcommand{\menu}[1]{\textit{#1}}
+
+% Órdenes para alternar entre el estilo español (ligera separación extra
+% entre párrafos) y el estilo por defecto (párrafos junticos junticos)
+\newcommand{\parrafosjuntos}{\setlength{\parskip}{0pt}}
+\newcommand{\parrafosseparados}{\setlength{\parskip}{1.5ex plus 0.6ex minus 0.5ex}}
+
+% datos importantes del documento
+\newcommand{\titulo}{Práctica 2: Introducción a la POO en Java}     % <<--- TÍTULO
+\newcommand{\fecha}{Semana de laboratorio 2}                         % <<--- TEMA
+\newcommand{\asignatura}{Tecnología de Videojuegos}
+\newcommand{\institucion}{UAH, Departamento de Automática, ATC-SOL}
+\newcommand{\paginaweb}{http://atc1.aut.uah.es}
+
+% portada
+\title{\asignatura \\ \titulo}
+\author{\institucion \\ \url{\paginaweb}}
+\date{\fecha}
+
+% márgenes un poco más finos
+\setmargrb{25mm}{20mm}{25mm}{20mm}    % left, top, right, bottom
+
+% encabezado y pie
+\pagestyle{fancy}
+\lhead{\footnotesize \parbox{11cm}{\asignatura}}
+\lfoot{\footnotesize \parbox{11cm}{\institucion}}
+\cfoot{}
+\rhead{\footnotesize \titulo}
+\rfoot{\footnotesize Página \thepage}
+\renewcommand{\headheight}{24pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%\renewcommand{\headrulewidth}{0pt}
+
+% listados de código fuente flotantes
+%\newfloat{floatlisting}{h}{}
+%\floatname{floatlisting}{Listado}
+
+% estilo de los listados de código
+\lstset{numbers=left,                 % números de línea
+        numberstyle=\tiny,            % tamaño de los num. de línea
+        extendedchars=true,           % acentos, eñes...
+        %frame=single,                 % marco que encuadra al listado
+        basicstyle=\footnotesize\ttfamily,   % tipo de letra
+        showstringspaces=false}       % no mostrar espacios de las cadenas
+
+\graphicspath{{figs/}}                % ruta de las figuras
+
+\begin{document} % ------------------ Aquí empieza el documento ----------------------
+
+% redefinir el nombre de algunas cosas
+\renewcommand{\tablename}{Tabla}                  % mejor "Tabla" que "Cuadro"
+\renewcommand{\listtablename}{Indice de tablas}
+% definidos originalmene en:
+%/usr/share/texmf-texlive/tex/generic/babel/spanish.ldf
+
+\maketitle              % montar el título aquí­ con los parámetros definidos arriba
+\thispagestyle{empty}   % no poner número de página ni nada de nada en la 1ª página
+
+\renewcommand{\abstractname}{}         % eliminar "Resumen"
+\begin{abstract}                       % resumen (sin la palabra "Resumen")
+\noindent \textbf{Objetivos:}
+\begin{itemize}
+\item Practicar la sintaxis básica de Java relacionada con POO
+\item Afianzar los conceptos elementales de POO
+\item Desarrollar el pensamiento algorítmico
+\end{itemize}
+\end{abstract}
+
+\sloppy              % hacer más flexible el cálculo del espacio entre palabras para
+                     % evitar errores de tipo "overfull box"
+                     % (lo contrario de \sloppy es \fussy)
+
+\parrafosseparados   % separación entre párrafos (por defecto saldrán pegados)
+
+\subsection*{Comentario inicial}
+En Java, a diferencia de C, un mismo proyecto puede contener más de una función \texttt{main()}. Más concretamente, cada clase puede tener una función \texttt{main()}, por eso es necesario indicar qué clase se quiere empezar a ejecutar cuando se invoca la máquina virtual de Java. En las prácticas puede integrar la función \texttt{main()} dentro de la clase (y por lo tanto el mismo archivo), o puede crear un archivo nuevo dentro del mismo paquete y ubicar ahí el \texttt{main()}. Se sugiere integrar el \texttt{main()} dentro de la clase, dado que es la práctica más habitual.
+
+\subsection*{Ejercicio 1}
+Implemente la clase Coche que represente coches. Incluya los atributos marca, modelo, marcha y color; y los métodos que simulen las acciones de arrancar el motor, describir el coche, cambiar de velocidad (subir y bajar marcha), acelerar, frenar y parar el motor (simplemente muestre un texto por pantalla o modificando algún atributo).\\
+
+Muestre el funcionamiento de la clase creando tres instancias de la clase representando coches diferentes, llamando a sus métodos y visualizando el resultado por pantalla.
+
+\subsection*{Ejercicio 2}
+Cree una clase Polinomio que implemente el siguiente polinomio:
+
+\begin{equation}
+f(x) = a x^3 + b x^2 + c x + d
+\end{equation}
+
+Con los atributos \texttt{a}, \texttt{b}, \texttt{c} y \texttt{d}, de tipo \texttt{double}, y los métodos siguientes:
+
+\begin{enumerate}
+\item \texttt{public void setA(double a)}: Establece el valor del coeficiente a.
+\item \texttt{public void setB(double b)}: Establece el valor del coeficiente b.
+\item \texttt{public void setC(double c)}: Establece el valor del coeficiente c.
+\item \texttt{public void setD(double d)}: Establece el valor del coeficiente d.
+\item \texttt{public void setABCD(double a, double b, double c, double d)}: Establece el valor de los coeficientes a, b, c y d.
+\item \texttt{public double compute(double x)}: Calcular el valor del polinomio para la x dada.
+\end{enumerate}
+
+\subsection*{Ejercicio 3}
+Diseñe e implemente una clase Calculadora que calcule la suma, resta, división y multiplicación de dos números que se pasarán como argumento a los métodos. ¿Es necesario utilizar atributos? Discútalo con el profesor del laboratorio.
+
+\subsection*{Ejercicio 4}
+Implemente una clase TableroAjedrez que visualice en modo texto un tablero de ajedrez (8x8), usando 'N' para identificar casillas negras, y 'B' las casillas blancas. Implementar un método adicional que imprima el tablero, pero indicando además a qué casillas se puede mover un alfil dada una determinada posición en forma (fila, columna).
+
+Utilice los siguientes métodos:
+
+\begin{enumerate}
+\item \texttt{pubic void imprimirTablero()}: Imprime un tablero sin fichas.
+\item \texttt{public void imprimirTablero(int fila, int columna)}: Imprime el tablero y las posiciones a las que se puede mover un alfil en la ubicación dada.
+\end{enumerate}
+
+\textit{Optativo: Diseñe (e implemente) una nueva clase que permita visualizar el tablero y los movimientos válidos de varias figuras (por ejemplo, torre, caballo y alfil) atendiendo a los principios de modularidad, encapsulamiento y reutilización. Discuta el diseño con el profesor del laboratorio.}
+
+\subsection*{Ejercicio 5}
+Repetir el ejercicio 3 usando una interfaz que contenga las funciones de la calculadora e implementar dicha interfaz en una clase.
+
+\subsection*{Ejercicio 6}
+Hacer un proyecto que integre el cálculo de polinomio del ejercicio 2 y la calculadora del ejercicio 5, de tal manera que todos los cálculos en la clase Polinomio se realicen invocando a la calculadora. El proyecto debería estar dividido en las siguientes clases con sus correspondientes paquetes:
+
+\begin{enumerate}
+\item \texttt{p2.ej6.calculadora.InterfazCalculadora}: Interfaz que define las operaciones de la calculadora.
+\item \texttt{p2.ej6.calculadora.Calculadora}: Clase que implementa la interfaz anterior.
+\item \texttt{p2.ej6.polinomio.Polinomio}: Clase desarrollada en el ejercicio 2 modificado para usar la clase \texttt{Calculadora}.
+\item \texttt{p2.ej6.Main}: Clase que contiene la función \texttt{main()}.
+\end{enumerate}
+
+\end{document} 

@@ -1,0 +1,225 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%     enunciado.tex:    Enunciado de la práctica 2 de GIEAI-Informática
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\documentclass[english,a4paper,11pt]{article}
+
+\usepackage[latin1]{inputenc}  % codificación de caracteres de este archivo
+\usepackage[spanish]{babel}    % Traducir: ``abstract'' ---> ``resumen''   etc.
+\usepackage{fancyhdr}          % páginas con cabecera y pie
+\usepackage{listings}          % listados de código fuente
+\usepackage{float}             % para que los listados floten como las figuras
+\usepackage{vmargin}           % ajuste de márgenes fácil de usar
+\usepackage[T1]{fontenc}       % meter fuentes vectoriales
+\usepackage{graphicx}          % figuras
+\usepackage{upquote}           % comilla recta con \textquotesingle
+\usepackage{placeins}          % orden \FloatBarrier para mantener figuras a raya
+\usepackage{url}
+
+\usepackage[implicit=false]{hyperref}  % enlaces web (el parámetro implicit=false
+                                       % evita problemas con el # de #include etc.)
+                                       % uso explícito: \href[options]{URL}{text}
+                                       %                \url{URL}
+
+% mis abreviaturas
+\newcommand{\C}{\texttt{C}}            % escribirá \C en lugar de \texttt{C}
+\newcommand{\Pascal}{\texttt{Pascal}}  % idem con \Pascal ...
+\newcommand{\fun}[1]{\texttt{#1()}}    % "\fun{main}" ---> "main()" en letra typewriter
+\newcommand{\hex}[1]{\texttt{#1}$_{hex}$}
+\newcommand{\bin}[1]{\texttt{#1}$_{bin}$}
+\newcommand{\enesimo}{\mbox{n-ésimo}}
+\newcommand{\muvision}{\textit{$\mu\!$Vision4}}
+\newcommand{\keilmuvision}{\textit{Keil}~\muvision}
+\newcommand{\codigo}[1]{\texttt{#1}}
+\newcommand{\menu}[1]{\textit{#1}}
+
+% Órdenes para alternar entre el estilo español (ligera separación extra
+% entre párrafos) y el estilo por defecto (párrafos junticos junticos)
+\newcommand{\parrafosjuntos}{\setlength{\parskip}{0pt}}
+\newcommand{\parrafosseparados}{\setlength{\parskip}{1.5ex plus 0.6ex minus 0.5ex}}
+
+% datos importantes del documento
+\newcommand{\titulo}{Práctica 7: Desarrollo de la IA de un videojuego}     % <<--- TÍTULO
+\newcommand{\asignatura}{Tecnología de Videojuegos}
+\newcommand{\institucion}{UAH, Departamento de Automática, ATC-SOL}
+\newcommand{\paginaweb}{http://atc1.aut.uah.es}
+
+% portada
+\title{\asignatura \\ \titulo}
+\author{\institucion \\ \url{\paginaweb}}
+\date{\fecha}
+
+% márgenes un poco más finos
+\setmargrb{25mm}{20mm}{25mm}{20mm}    % left, top, right, bottom
+
+% encabezado y pie
+\pagestyle{fancy}
+\lhead{\footnotesize \parbox{11cm}{\asignatura}}
+\lfoot{\footnotesize \parbox{11cm}{\institucion}}
+\cfoot{}
+\rhead{\footnotesize \titulo}
+\rfoot{\footnotesize Página \thepage}
+\renewcommand{\headheight}{24pt}
+\renewcommand{\footrulewidth}{0.4pt}
+%\renewcommand{\headrulewidth}{0pt}
+
+% listados de código fuente flotantes
+%\newfloat{floatlisting}{h}{}
+%\floatname{floatlisting}{Listado}
+
+% estilo de los listados de código
+\lstset{numbers=left,                 % números de línea
+        numberstyle=\tiny,            % tamaño de los num. de línea
+        extendedchars=true,           % acentos, eñes...
+        %frame=single,                 % marco que encuadra al listado
+        basicstyle=\footnotesize\ttfamily,   % tipo de letra
+        showstringspaces=false}       % no mostrar espacios de las cadenas
+
+\graphicspath{{figs/}}                % ruta de las figuras
+
+\begin{document} % ------------------ Aquí empieza el documento ----------------------
+
+% redefinir el nombre de algunas cosas
+\renewcommand{\tablename}{Tabla}                  % mejor "Tabla" que "Cuadro"
+\renewcommand{\listtablename}{Indice de tablas}
+% definidos originalmene en:
+%/usr/share/texmf-texlive/tex/generic/babel/spanish.ldf
+
+\maketitle              % montar el título aquí­ con los parámetros definidos arriba
+\thispagestyle{empty}   % no poner número de página ni nada de nada en la 1ª página
+
+\renewcommand{\abstractname}{}         % eliminar "Resumen"
+\begin{abstract}                       % resumen (sin la palabra "Resumen")
+\noindent \textbf{Objetivos:}
+\begin{itemize}
+\item Implementar la lógica de un bot en un videojuego completo
+\item Desarrollo del pensamiento algorítmico
+\item Utilización de heurísticas sencillas
+\item Familiarización con la lectura de código ajeno
+\item Manejar documentación en formato Javadoc
+\end{itemize}
+\end{abstract}
+
+\sloppy              % hacer más flexible el cálculo del espacio entre palabras para
+                     % evitar errores de tipo "overfull box"
+                     % (lo contrario de \sloppy es \fussy)
+
+\parrafosseparados   % separación entre párrafos (por defecto saldrán pegados)
+
+\subsection*{Comentario inicial}
+El objetivo de la presente práctica es el desarrollo de la inteligencia de un bot dentro de un videojuego completo. Para ello se utilizará \textit{Robocode}\footnote{\url{http://robocode.sourceforge.net/}}, un videojuego pensado como plataforma de competición de IA que ofrece un modelo de programación extremadamente sencillo. Esto nos va a permitir evadir dificultades de la programación para poder dedicar todo el esfuerzo al desarrollo de la inteligencia del bot.
+
+Robocode es un juego de combate entre tanques (o robots, si usamos los mismos términos que Robocode), en el varios tanques combaten entre sí. Cada partida está dividida en una serie de rondas independientes en el que combaten un número variable de tanques. El ganador es quien acumule más puntos al final de dichas rondas. La figura \ref{fig:captura} representa una captura de pantalla del juego.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.6\textwidth]{figs/captura}
+  \caption{Captura de pantalla de una partida de Robocode.}
+  \label{fig:captura}
+\end{figure}
+
+La práctica consiste en desarrollar el controlador del tanque, de manera que el tanque pueda combatir eficazmente de manera autónoma sin ningún tipo de intervención humana.
+
+\subsection*{Descripción del juego}
+Las partidas de Robocode transcurren dentro de un escenario rectangular sin obstáculos delimitado por paredes en el que se situán todos los tanques. Cada tanque dispone de una cantidad de energía que disminuye cuando recibe un disparo, choca contra otro tanque o con la pared. La acción de disparar también consume energía, dependiente de la potencia del mismo. La única manera de recuperar energía es acertando a un tanque adversario; se ganará más energía cuanto más potente haya sido el disparo. Cuando la energía es consumida, el tanque queda inutilizado, sin poderse mover ni disparar. Si la energía desciende de cero, el tanque es destruido. Al disparar el cañón se recalienta, y alcanzada una cierta temperatura no puede seguir disparando; la temperatura baja si se deja enfriar el cañón no disparando.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.25\textwidth]{figs/Anatomy}
+  \caption{Componentes de un tanque en Robocode.}
+  \label{fig:tanque}
+\end{figure}
+
+Los tanques están divididos en tres componentes que se pueden mover independientemente: Cuerpo, torreta y rádar. El cuerpo puede girar a derecha e izquierda, y moverse adelante o atrás. La torreta contiene el cañón, puede girar y girar a izquierda o derecha. El rádar permite localizar a tanques adversarios, y al igual que la torreta, puede girar a izquierda y derecha. Los compontentes del tanque están ilustrados en la figura~\ref{fig:tanque}.
+
+\begin{figure}
+  \centering
+  \includegraphics[width=0.5\textwidth]{figs/fig2}
+  \caption{Sistema de coordenadas utilizadas en el juego.}
+  \label{fig:coordenadas}
+\end{figure}
+
+El sistema de coordenadas, tal y como se puede ver en la figura~\ref{fig:coordenadas}, es cartesiano y tiene su origen en la esquina inferior izquierda. La unidad de medida utilizada es el pixel, si bien se guardan dentro de variables de tipo \texttt{double}, por lo que en la práctica se pueden especificar unidades fraccionarias de pixel. Para especificar giros y posiciones de elementos giratorios (cuerpo, torreta o rádar) se puede usar grados, utilizando como referencia el norte (0 grados). Algunos métodos admiten como argumento el número de grados relativos al elemento móvil, indicando, por ejemplo, que gire 30º a la izquierda, en vez de indicarle que gire a la posición de 30º (respecto a la parte superior de la pantalla).
+
+\subsection*{Modelo de programación}
+La programación de un tanque es muy simple. Para programar un robot de Robocode es necesario crear una nueva clase que herede de la clase \texttt{Robot}\footnote{Existe un modelo de programación avanzado, centrada en la clase \texttt{AdvancedRobot}, que es más compleja de programar, pero también ofrece más posibilidades}. El robot así creado tiene, sin necesidad de codificar, una gran cantidad de métodos disponibles, y no hace falta preocuparse por cuestiones como la visualización del robot o la gestión de eventos.
+
+El método principal que hay que sobrecargar es \texttt{run()}\footnote{Siendo más técnicos, cada tanque es en realidad un hilo; el método \texttt{run()} es la forma en Java de crear hilos. No obstante, la programación de hilos no está contemplada en la asignatura y no es necesario su conocimiento para realizar esta práctica}, que es llamado cuando el robot es instaciado y es donde hay que introducir la lógica del tanque. El motor del juego se encarga de paralizar la ejecución del código del robot cuando sea necesario y realizar otras tareas, por lo que el programador del robot simplemente puede asumir que es un método constantemente en ejecución, con alguna limitación de tiempo. 
+
+Los métodos principales que tiene un robot son los siguientes:
+
+\begin{itemize}
+	\item \texttt{public void fire(double power)}
+	\item \texttt{void turnGunLeft(double degrees)}
+	\item \texttt{void turnGunRight(double degrees)}
+	\item \texttt{void turnLeft(double degrees)}
+	\item \texttt{void turnRadarLeft(double degrees)}
+	\item \texttt{void turnRadarRight(double degrees)}
+	\item \texttt{void turnRight(double degrees)}
+	\item \texttt{void ahead(double distance)}
+	\item \texttt{void back(double distance)}
+\end{itemize}
+
+Un elemento importante a tener en cuenta es la utilización de eventos. Cuando sucede algo relevante para el robot que no sea predecible, como el impacto de una bala, o la colisión con un muro, se genera un evento. En términos de programación, ese evento se traduce en que se invoca la ejecución de un método, independientemente del código que el robot estuviera ejecutando en ese momento, todo de forma transparente al programador. 
+
+Los métodos asociados a eventos más importantes son los siguientes:
+
+\begin{itemize}
+	\item \texttt{public void onScannedRobot(ScannedRobotEvent e)}
+	\item \texttt{void onHitByBullet(HitByBulletEvent event)} 
+	\item \texttt{void onBulletMissed(BulletMissedEvent event)}
+	\item \texttt{void onHitRobot(HitRobotEvent event)}
+	\item \texttt{void onHitWall(HitWallEvent event)}
+\end{itemize}
+
+Se puede cambiar el comportamiento del tanque ante estos eventos simplemente sobrecargando el método en cuestión. Hay que destacar que el evento se aporta como parámetro al método, y contiene información sobre el mismo. El evento más importante es \texttt{onScannedRobot()}, que se activa cada vez que un robot enemigo es detectado por el rádar.
+
+Robocode tiene integrado un editor de código fuente que permite editar y compilar los robots, por lo que el desarrollo se simplifica en gran medida. Si se desea, también se puede trabajar desde un IDE externo como NetBeans o Eclipse.
+
+\subsection*{Aspectos a considerar}
+Hay una serie de reglas en el juego que, si se tienen en cuenta, introduce una complejidad mayor, pero también permite crear robots mucho mejores. Algunas de estas reglas están descritas a continuación:
+
+\begin{itemize}
+	\item El choque con los muros u otros robots reduce la energía.
+	\item La velocidad de las balas es finita.
+	\item La velocidad de las balas depende de su potencia.
+	\item La energía consumida en cada disparo depende de la potencia del mismo.
+	\item Se puede conocer la dirección de movimiento de un tanque cuando se le detecta.
+	\item La dinámica de los tanques está sujeta a una aceleración.
+	\item Existe una tasa de giro máxima para el tanque, la torreta y el rádar.
+\end{itemize}
+
+\subsection*{Ejercicio 1: Manejo de Robocode}
+Cuando se comienza a programar en un nuevo entorno conviene, en primer lugar, realizar una serie de tareas sencillas que permitan familiarizarse con él. Para empezar, realice las siguientes tareas:
+
+\begin{enumerate}
+\item Descargar, instalar y ejecutar Robocode. Consultar la guía de instalación si es preciso.
+\item Hay dos robots interactivos (\texttt{sample.Interactive} y \texttt{sample.Interactive\_v2}), muy útiles para tareas de depuración. Jugar varias partidas con dichos robots y otros contenidos de ejemplo para comprobar sus diferencias y comprender las reglas del juego.
+\item Comprender la lógica que siguen los distintos robots de ejemplo que vienen con Robocode.
+\end{enumerate}
+
+\subsection*{Ejercicio 2: Manejo de la documentación de Robocode}
+El ejercicio profesional de la programación exige el aprendizaje constante de nuevas herramientas y bibliotecas. Además, cualquier aplicación suele ser tan extensa que siempre implica utilizar nuevas bibliotecas, por lo que resulta imprescindible aprender a aprender el uso de las mismas. Para ello es imprescindible aprender a manejar documentación, leer código fuente y manejar documentación en formato JavaDoc es imprescindible.
+
+\begin{enumerate}
+\item Localizar la documentación aportada por Robocode. ¿Qué documento da información elemental sobre cómo se programa un robot?
+\item Buscar información relativa a la física del juego. ¿A qué velocidad se mueven los robots? ¿Y las balas? ¿Cuánto daño inflinge el impacto de una bala? 
+\item JavaDoc contiene todos los métodos disponibles en Robocode. Localice la página en la que se encuentra este documento.
+\item En base al punto anterior, responda a las siguientes preguntas: ¿Qué método permite conocer la energía restante en el robot? ¿Qué métodos permiten conocer la posición del robot? ¿Cómo se puede conseguir que el movimiento del cuerpo del robot y la torreta sean independientes? ¿Cómo se puede conocer cuánta energía le queda a un robot adversario que ha sido detectado?
+\end{enumerate}
+
+\subsection*{Ejercicio 3: Programación de Robocode}
+Una regla básica esencial en programación (e ingeniería en general) es partir de sistemas sencillos e ir añadiendo complejidad poco a poco, abordando un único problema cada vez.
+
+\begin{enumerate}
+\item Abrir el editor integrado en Robocode, crear un nuevo robot con él y ejecutar el robot por defecto que se crea.
+\item Modificar el robot por defecto personalizando los colores del cuerpo, cañón y rádar.
+\item Crear un robot que, permaneciendo quieto, vaya girando la torreta y dispare cuando se detecte un robot adversario.
+\item Modificar el robot anterior para que constantemente se desplace en una única dirección hasta chocar con una pareded o robot, y entonces se desplace en el sentido inverso.
+\item Localizar la ubicación de las clases Java con la implementación de robots de ejemplo. Abrir varios de ellos e intentar comprender el código. Compararlo con el código desarrollado anteriormente.
+\end{enumerate}
+
+\subsection*{Ejercicio 4}
+Implementar un robot optimizado para realizar batallas contra entre dos y tres robots adversarios. No se puede utilizar ninguno de los algoritmos de ejemplo ni robots publicados en Internet.
+
+\end{document} 
