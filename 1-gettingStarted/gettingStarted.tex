@@ -1,237 +1,90 @@
-% $Header: /cvsroot/latex-beamer/latex-beamer/solutions/generic-talks/generic-ornate-15min-45min.en.tex,v 1.5 2007/01/28 20:48:23 tantau Exp $
-
-\documentclass{beamer}
-%\documentclass[mathsherif]{beamer}
-
-% This file is a solution template for:
-
-% - Giving a talk on some subject.
-% - The talk is between 15min and 45min long.
-% - Style is ornate.
-
-
-
-% Copyright 2004 by Till Tantau <tantau@users.sourceforge.net>.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% MUW Presentation
+% LaTeX Template
+% Version 1.0 (27/12/2016)
 %
-% In principle, this file can be redistributed and/or modified under
-% the terms of the GNU Public License, version 2.
+% License:
+% CC BY-NC-SA 4.0 (http://creativecommons.org/licenses/by-nc-sa/3.0/)
 %
-% However, this file is supposed to be a template to be modified
-% for your own needs. For this reason, if you use this file as a
-% template and not specifically distribute it as part of a another
-% package/program, I grant the extra permission to freely copy and
-% modify this file as you see fit and even to delete this copyright
-% notice.
+% Created by:
+% Nicolas Ballarini, CeMSIIS, Medical University of Vienna
+% nicoballarini@gmail.com
+% http://statistics.msi.meduniwien.ac.at/
+%
+% Customized for UAH by:
+% David F. Barrero, Departamento de Automática, UAH
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
+\documentclass[10pt,compress]{beamer} % Change 10pt to make fonts of a different size
 \mode<presentation>
-{
-\usecolortheme[RGB={89,165,140}]{structure}
-
-  \usetheme{Warsaw}
-\setbeamercolor*{palette quaternary}{fg=white,bg=structure!40!black}
-
-
-% o Singapore
-% \setbeamercolor{normal text}{bg=blue!10} % para azul, la oscuridad del color se regula cambiando (!20)
-% \beamertemplateshadingbackground{yellow!50}{magenta!50} % degradado de amarillo a magenta
-  % or ...
-% \setbeamertemplate{navigation symbols}{} quitar l\'{\i}nea de s\'{\i}mbolos esquina inferior derecha -in\'{u}tiles
-  \setbeamercovered{transparent}
-  % or whatever (possibly just delete it)
-}
-
 
 \usepackage[spanish]{babel}
-% or whatever
-
-\usepackage[latin1]{inputenc}
-% or whatever
-
-\usepackage{times}
-\usepackage[T1]{fontenc}
-\usepackage{lmodern}
-
-%\usepackage{lucidaso}
-%\usepackage[small]{eulervm}
-
-% Paquetes de David
-\usepackage{verbatim}
-\usepackage{listings}
-\usepackage{color}
+\usepackage{fontspec}
+\usepackage{tikz}
 \usepackage{etoolbox}
+\usepackage{xcolor}
 \usepackage{xstring}
-\usepackage{../gsi-parametros}
- 
-\definecolor{dkgreen}{rgb}{0,0.6,0}
-\definecolor{gray}{rgb}{0.5,0.5,0.5}
-\definecolor{mauve}{rgb}{0.58,0,0.82}
-  
-\lstset{ %
-  language=Java,                % the language of the code
-  basicstyle=\footnotesize,           % the size of the fonts that are used for the code
-  %numbers=left,                   % where to put the line-numbers
-  numberstyle=\tiny\color{gray},  % the style that is used for the line-numbers
-  numbersep=5pt,                  % how far the line-numbers are from the code
-%  backgroundcolor=\color{white},      % choose the background color. You must add \usepackage{color}
-  showspaces=false,               % show spaces adding particular underscores
-  showstringspaces=false,         % underline spaces within strings
-  showtabs=false,                 % show tabs within strings adding particular underscores
-  %frame=single,                   % adds a frame around the code
-  rulecolor=\color{black},        % if not set, the frame-color may be changed on line-breaks within not-black text (e.g. commens (green here))
-  tabsize=2,                      % sets default tabsize to 2 spaces
-  captionpos=b,                   % sets the caption-position to bottom
-  breaklines=true,                % sets automatic line breaking
-  breakatwhitespace=false,        % sets if automatic breaks should only happen at whitespace
-  %title=\lstname,                   % show the filename of files included with \lstinputlisting;
-  keywordstyle=\color{blue},          % keyword style
-  commentstyle=\color{dkgreen},       % comment style
-  stringstyle=\color{mauve},         % string literal style
-  escapeinside={\%*}{*)},            % if you want to add a comment within your code
-  morekeywords={*,...}               % if you want to add more keywords to the set
-}
+\usepackage{listings}
 
+\usetheme{UAH}
+\usecolortheme{UAH}
+\setbeamertemplate{navigation symbols}{} 
+\setbeamertemplate{caption}[numbered]
 
-% Or whatever. Note that the encoding and the font should match. If T1
-% does not look nice, try deleting the line with the fontenc.
-
-% para Singapore
-%\setbeamertemplate{footline}{%
-%\leavevmode%
-%\hbox{%
-%\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{author in head/foot}%
-%\usebeamerfont{author in head/foot}\insertshortauthor
-%\end{beamercolorbox}%
-%\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,center]{title in head/foot}%
-%\usebeamerfont{title in head/foot}\insertshorttitle
-%\end{beamercolorbox}%
-%\begin{beamercolorbox}[wd=.333333\paperwidth,ht=2.25ex,dp=1ex,right]{date in head/foot}%
-%\usebeamerfont{date in head/foot}\insertshortdate{}\hspace*{2em}
-%\insertframenumber{} / \inserttotalframenumber\hspace*{2ex}
-%\end{beamercolorbox}}%
-%\vskip0pt%
-%}
-%
-% para Warsaw
-\newcommand*\oldmacro{}%
-\let\oldmacro\insertshorttitle%
-\renewcommand*\insertshorttitle{%
-  \oldmacro\hfill%
-  \insertframenumber\,/\,\inserttotalframenumber}
-
-%\renewcommand*{\appendixname}{Referencias}
-
-
-\title[Getting started] % (optional, use only with long paper titles)
-{Getting started}
-
-%\subtitle
-%{Presentation Subtitle} % (optional)
-
-\author[\asignatura] % (optional, use only with lots of authors)
-{\autor}
-% - Use the \inst{?} command only if the authors have different
-%   affiliation.
-
-\institute[Universidad de Alcal\'{a}] % (optional, but mostly needed)
-{
-  %\inst{1}%
-  \textcolor{structure} {\emph{\textbf{Departamento de Autom\'{a}tica}}}\\
-  Universidad de Alcal\'{a}
-
-% - Use the \inst command only if there are several affiliations.
-% - Keep it simple, no one is interested in your street address.
-
-%\date[Short Occasion] % (optional)
-%{Date / Occasion}
-
-\vspace*{0.5cm}
-\includegraphics[height=0.8cm]{comun/uah}
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Presentation Info
+\title[Getting started]{Getting started}
+\author{}
+\institute{\asignatura}
 \date{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Descomentar para habilitar barra de navegación superior
+\ponerNavegacion
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%logos s\'{o}lo en title
-\titlegraphic{
-  \includegraphics[scale=0.45]{comun/dpto}
-  \hfill
- % \includegraphics[scale=0.35]{gso1}
- % \hfill
-  \includegraphics[scale=0.20]{comun/gso1}
-}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Configuración de logotipos en portada
+%% Opacidad de los logotipos
+\newcommand{\opacidad}{1}
+%% Descomentar para habilitar logotipo en pié de página de portada
+\renewcommand{\logoUno}{Images/isg.png}
+%% Descomentar para habilitar logotipo en pié de página de portada
+%\renewcommand{\logoDos}{Images/CCLogo.png}
+%% Descomentar para habilitar logotipo en pié de página de portada
+%\renewcommand{\logoTres}{Images/ALogo.png}
+%% Descomentar para habilitar logotipo en pié de página de portada
+%\renewcommand{\logoCuatro}{Images/ELogo.png}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% logos tal cual: salen en todos los frames...
-%\pgfdeclareimage[height=0.4cm]{left-logo}{gso1}
-%\pgfdeclareimage[height=0.4cm]{right-logo}{gso1}
-%\logo{\pgfuseimage{right-logo}}
-
-
-%\setbeamertemplate{sidebar left}
-%{
-%\logo{\pgfuseimage{left-logo}}
-%\vfill%
-%\rlap{\hskip0.1cm\insertlogo}%
-%\vskip15pt%
-%}
-
-\subject{Talks}
-% This is only inserted into the PDF information catalog. Can be left
-% out.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% FOOTLINE
+%% Comment/Uncomment the following blocks to modify the footline
+%% content in the body slides. 
 
 
-
-% If you have a file called "university-logo-filename.xxx", where xxx
-% is a graphic format that can be processed by latex or pdflatex,
-% resp., then you can add a logo as follows:
-
-
-% marca de agua de una imagen
-
-\usebackgroundtemplate{\includegraphics[width=\paperwidth]{comun/marcadeagua}}
-
-
-%% QUITAR LOS PARES %% DE LAS L\'{I}NEAS DE \AtBeginSubsection PARA QUE SE GENERE LA NAVEGACI\'{O}N EN LA SUBSECCIONES
-%%\AtBeginSubsection[]
-%% {
-%%     \begin{frame}{\'{I}ndice}
-%  \small
-%  \tableofcontents[currentsection,hideothersubsections]
-%  \normalsize
-% \end{frame}
-
-%%    \small
-%%    \tableofcontents[currentsection,currentsubsection]
-     % \tableofcontents[pausesections]
-%%   \end{frame}
-%%}
-
-%% QUITAR LOS PARES %% DE LAS L\'{I}NEAS DE \AtBeginSubsection PARA QUE SE GENERE LA NAVEGACI\'{O}N EN LA SUBSECCIONES
-%%\AtBeginSection[]
-%% {
-%%     \begin{frame}{\'{I}ndice}
-%  \small
-%  \tableofcontents[currentsection,hideothersubsections]
-%  \normalsize
-% \end{frame}
-
-%%    \small
-%%    \tableofcontents[currentsection]
-     % \tableofcontents[pausesections]
-%%   \end{frame}
-%%}
-
-% If you wish to uncover everything in a step-wise fashion, uncomment
-% the following command:
-
-%\beamerdefaultoverlayspecification{<+->}
-
+%% Option A: Title and institute
+\footlineA
+%% Option B: Author and institute
+%\footlineB
+%% Option C: Title, Author and institute
+%\footlineC
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \begin{document}
 
-\begin{frame}[plain]
-  \titlepage
-\end{frame}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Use this block for a blue title slide with modified footline
+{\titlepageBlue
+    \setbeamertemplate{headline}{}
+	\setbeamercolor{frametitle}{bg=black}
+	\setbeamercolor{normal text}{bg=black}
+    \begin{frame}
+        \titlepage
+    \end{frame}
+}
 
 \begin{frame}[plain]{}
    \begin{block}{Objectives}
@@ -252,26 +105,14 @@
 
 \end{frame}
 
+{
+\eliminarNavegacion
 \begin{frame}[shrink]{Table of Contents}
  \frametitle{Table of Contents}
  \tableofcontents
-
- % no me vale: deja descolgado el cap\'{\i}tulo 4
- % \frame[allowframebreaks]%
- %    {\frametitle{\'{I}ndice}\tableofcontents[part=4]}
   % You might wish to add the option [pausesections]
 \end{frame}
-
-
-% Since this a solution template for a generic talk, very little can
-% be said about how it should be structured. However, the talk length
-% of between 15min and 45min and the theme suggest that you stick to
-% the following rules:
-
-% - Exactly two or three sections (other than the summary).
-% - At *most* three subsections per section.
-% - Talk about 30s to 2min per frame. So there should be between about
-%   15 and 30 frames, all told.
+}
 
 \section{Programming languages}
 
@@ -498,11 +339,9 @@
 	\begin{enumerate}
 		\item How can you compile and run the program?
 		\item How would you join the two last lines?
-		\item Change the program to show the number of years to 100
+		\item Change the program to show the number of even years to 100
 		\item Change the program to read and show weight (float number)
 	\end{enumerate}
 \end{frame}
-
-
 
 \end{document}
