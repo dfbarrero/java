@@ -1,0 +1,15 @@
+
+\newcommand{\modo}[1][]{}
+\renewcommand{\modo}{VIDEOJUEGOS} % DESCOMENTAR LINEA CORRECTA
+
+% Iniciamos variables con valores vacios
+\newcommand{\autor}{}
+\newcommand{\asignatura}{}
+\newcommand{\carrera}{}
+
+% Personalizar a partir de aqui
+\IfStrEq{\modo}{VIDEOJUEGOS}{
+	\renewcommand{\autor}{}
+	\renewcommand{\asignatura}{Videogames Technology}
+	\renewcommand{\carrera}{Asignatura transversal}
+}{}
