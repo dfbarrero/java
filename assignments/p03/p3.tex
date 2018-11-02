@@ -1,47 +1,47 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%     enunciado.tex:    Enunciado de la pr·ctica 2 de GIEAI-Inform·tica
+%     enunciado.tex:    Enunciado de la pr√°ctica 2 de GIEAI-Inform√°tica
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \documentclass[english,a4paper,11pt]{article}
 
-\usepackage[latin1]{inputenc}  % codificaciÛn de caracteres de este archivo
+\usepackage[latin1]{inputenc}  % codificaci√≥n de caracteres de este archivo
 \usepackage[spanish]{babel}    % Traducir: ``abstract'' ---> ``resumen''   etc.
-\usepackage{fancyhdr}          % p·ginas con cabecera y pie
-\usepackage{listings}          % listados de cÛdigo fuente
+\usepackage{fancyhdr}          % p√°ginas con cabecera y pie
+\usepackage{listings}          % listados de c√≥digo fuente
 \usepackage{float}             % para que los listados floten como las figuras
-\usepackage{vmargin}           % ajuste de m·rgenes f·cil de usar
+\usepackage{vmargin}           % ajuste de m√°rgenes f√°cil de usar
 \usepackage[T1]{fontenc}       % meter fuentes vectoriales
 \usepackage{graphicx}          % figuras
 \usepackage{upquote}           % comilla recta con \textquotesingle
 \usepackage{placeins}          % orden \FloatBarrier para mantener figuras a raya
 
-\usepackage[implicit=false]{hyperref}  % enlaces web (el par·metro implicit=false
+\usepackage[implicit=false]{hyperref}  % enlaces web (el par√°metro implicit=false
                                        % evita problemas con el # de #include etc.)
-                                       % uso explÌcito: \href[options]{URL}{text}
+                                       % uso expl√≠cito: \href[options]{URL}{text}
                                        %                \url{URL}
 
 % mis abreviaturas
-\newcommand{\C}{\texttt{C}}            % escribir· \C en lugar de \texttt{C}
+\newcommand{\C}{\texttt{C}}            % escribir√° \C en lugar de \texttt{C}
 \newcommand{\Pascal}{\texttt{Pascal}}  % idem con \Pascal ...
 \newcommand{\fun}[1]{\texttt{#1()}}    % "\fun{main}" ---> "main()" en letra typewriter
 \newcommand{\hex}[1]{\texttt{#1}$_{hex}$}
 \newcommand{\bin}[1]{\texttt{#1}$_{bin}$}
-\newcommand{\enesimo}{\mbox{n-Èsimo}}
+\newcommand{\enesimo}{\mbox{n-√©simo}}
 \newcommand{\muvision}{\textit{$\mu\!$Vision4}}
 \newcommand{\keilmuvision}{\textit{Keil}~\muvision}
 \newcommand{\codigo}[1]{\texttt{#1}}
 \newcommand{\menu}[1]{\textit{#1}}
 
-% ”rdenes para alternar entre el estilo espaÒol (ligera separaciÛn extra
-% entre p·rrafos) y el estilo por defecto (p·rrafos junticos junticos)
+% √ìrdenes para alternar entre el estilo espa√±ol (ligera separaci√≥n extra
+% entre p√°rrafos) y el estilo por defecto (p√°rrafos junticos junticos)
 \newcommand{\parrafosjuntos}{\setlength{\parskip}{0pt}}
 \newcommand{\parrafosseparados}{\setlength{\parskip}{1.5ex plus 0.6ex minus 0.5ex}}
 
 % datos importantes del documento
-\newcommand{\titulo}{Pr·ctica 2: Herencia y sobrecarga en Java}     % <<--- TÕTULO
+\newcommand{\titulo}{Pr√°ctica 3: Herencia y sobrecarga en Java}     % <<--- T√çTULO
 \newcommand{\fecha}{Semana de laboratorio 3}                         % <<--- TEMA
-\newcommand{\asignatura}{TecnologÌa de Videojuegos}
-\newcommand{\institucion}{UAH, Departamento de Autom·tica, ATC-SOL}
+\newcommand{\asignatura}{Tecnolog√≠a de Videojuegos}
+\newcommand{\institucion}{UAH, Departamento de Autom√°tica, ATC-SOL}
 \newcommand{\paginaweb}{http://atc1.aut.uah.es}
 
 % portada
@@ -49,7 +49,7 @@
 \author{\institucion \\ \url{\paginaweb}}
 \date{\fecha}
 
-% m·rgenes un poco m·s finos
+% m√°rgenes un poco m√°s finos
 \setmargrb{25mm}{20mm}{25mm}{20mm}    % left, top, right, bottom
 
 % encabezado y pie
@@ -58,26 +58,26 @@
 \lfoot{\footnotesize \parbox{11cm}{\institucion}}
 \cfoot{}
 \rhead{\footnotesize \titulo}
-\rfoot{\footnotesize P·gina \thepage}
+\rfoot{\footnotesize P√°gina \thepage}
 \renewcommand{\headheight}{24pt}
 \renewcommand{\footrulewidth}{0.4pt}
 %\renewcommand{\headrulewidth}{0pt}
 
-% listados de cÛdigo fuente flotantes
+% listados de c√≥digo fuente flotantes
 %\newfloat{floatlisting}{h}{}
 %\floatname{floatlisting}{Listado}
 
-% estilo de los listados de cÛdigo
-\lstset{numbers=left,                 % n˙meros de lÌnea
-        numberstyle=\tiny,            % tamaÒo de los num. de lÌnea
-        extendedchars=true,           % acentos, eÒes...
+% estilo de los listados de c√≥digo
+\lstset{numbers=left,                 % n√∫meros de l√≠nea
+        numberstyle=\tiny,            % tama√±o de los num. de l√≠nea
+        extendedchars=true,           % acentos, e√±es...
         %frame=single,                 % marco que encuadra al listado
         basicstyle=\footnotesize\ttfamily,   % tipo de letra
         showstringspaces=false}       % no mostrar espacios de las cadenas
 
 \graphicspath{{figs/}}                % ruta de las figuras
 
-\begin{document} % ------------------ AquÌ empieza el documento ----------------------
+\begin{document} % ------------------ Aqu√≠ empieza el documento ----------------------
 
 % redefinir el nombre de algunas cosas
 \renewcommand{\tablename}{Tabla}                  % mejor "Tabla" que "Cuadro"
@@ -85,36 +85,36 @@
 % definidos originalmene en:
 %/usr/share/texmf-texlive/tex/generic/babel/spanish.ldf
 
-\maketitle              % montar el tÌtulo aquÌ≠ con los par·metros definidos arriba
-\thispagestyle{empty}   % no poner n˙mero de p·gina ni nada de nada en la 1™ p·gina
+\maketitle              % montar el t√≠tulo aqu√≠¬≠ con los par√°metros definidos arriba
+\thispagestyle{empty}   % no poner n√∫mero de p√°gina ni nada de nada en la 1¬™ p√°gina
 
 \renewcommand{\abstractname}{}         % eliminar "Resumen"
 \begin{abstract}                       % resumen (sin la palabra "Resumen")
 \noindent \textbf{Objetivos:}
 \begin{itemize}
 \item Practicar el mecanismo de herencia en Java
-\item Practicar la sobrecarga de mÈtodos
-\item Desarrollar buenos h·bitos de programaciÛn
-\item Comprender una jerarquÌa de clases utilizando un diagrama de clases en UML
+\item Practicar la sobrecarga de m√©todos
+\item Desarrollar buenos h√°bitos de programaci√≥n
+\item Comprender una jerarqu√≠a de clases utilizando un diagrama de clases en UML
 \item Practicar los modificadores de acceso en Java
-\item Practicar la utilizaciÛn de paquetes
-\item Afianzar la comprensiÛn de POO
+\item Practicar la utilizaci√≥n de paquetes
+\item Afianzar la comprensi√≥n de POO
 \end{itemize}
 \end{abstract}
 
-\sloppy              % hacer m·s flexible el c·lculo del espacio entre palabras para
+\sloppy              % hacer m√°s flexible el c√°lculo del espacio entre palabras para
                      % evitar errores de tipo "overfull box"
                      % (lo contrario de \sloppy es \fussy)
 
-\parrafosseparados   % separaciÛn entre p·rrafos (por defecto saldr·n pegados)
+\parrafosseparados   % separaci√≥n entre p√°rrafos (por defecto saldr√°n pegados)
 
 \subsection*{Comentario inicial}
-Se pretende desarrollar un videojuego RPG de fantasÌa medieval. El juego tendr· tres tipos de personaje (mago, guerrero o ladrÛn), cada uno con una serie de habilidades especÌficas. AsÌ mismo, cada personaje podr· tener un arma (espada, arco o bastÛn). Como primer paso para el desarrollo del videojuego, se pretende crear una biblioteca de clases que modele los datos presentes en el juego e implemente la lÛgica de algunas acciones del mismo.
+Se pretende desarrollar un videojuego RPG de fantas√≠a medieval. El juego tendr√° tres tipos de personaje (mago, guerrero o ladr√≥n), cada uno con una serie de habilidades espec√≠ficas. As√≠ mismo, cada personaje podr√° tener un arma (espada, arco o bast√≥n). Como primer paso para el desarrollo del videojuego, se pretende crear una biblioteca de clases que modele los datos presentes en el juego e implemente la l√≥gica de algunas acciones del mismo.
 
-La pr·ctica de programaciÛn recomendada es desarrollar las clases por separado, asegurando que cada una funciona correctamente de manera individual, para poco a poco ir integr·ndolas hasta obtener la aplicaciÛn final. Siguiendo esta lÛgica, realice los siguientes dos ejercicios.
+La pr√°ctica de programaci√≥n recomendada es desarrollar las clases por separado, asegurando que cada una funciona correctamente de manera individual, para poco a poco ir integr√°ndolas hasta obtener la aplicaci√≥n final. Siguiendo esta l√≥gica, realice los siguientes dos ejercicios.
 
 \subsection*{Ejercicio 1}
-El primer paso en el desarrollo del videojuego es la programaciÛn de las armas de los personajes. Para ello se partir· de una clase \texttt{Arma} que servir· como clase base para el resto de las armas. De \texttt{Arma} derivan tres clases m·s: \texttt{Espada}, \texttt{Arco} y \texttt{Baston}. 
+El primer paso en el desarrollo del videojuego es la programaci√≥n de las armas de los personajes. Para ello se partir√° de una clase \texttt{Arma} que servir√° como clase base para el resto de las armas. De \texttt{Arma} derivan tres clases m√°s: \texttt{Espada}, \texttt{Arco} y \texttt{Baston}. 
 
 \begin{figure}
   \centering
@@ -123,22 +123,22 @@ El primer paso en el desarrollo del videojuego es la programaciÛn de las armas d
   \label{fig:ej1}
 \end{figure}
 
-La figura~\ref{fig:ej1} representa el diagrama de clases que se pretende implementar. H·galo siguiendo los siguientes pasos. Todas las armas tienen un nombre y un daÒo asociado, ambas guardadas, respectivamente, en los atributos \texttt{nombre} y \texttt{danyo}. Adicionalmente, cada arma guarda un dato especÌfico a la misma, el arco contiene el n˙mero de flechas restante, la espada la resistencia de la misma, y el bastÛn puntos de magia.
+La figura~\ref{fig:ej1} representa el diagrama de clases que se pretende implementar. H√°galo siguiendo los siguientes pasos. Todas las armas tienen un nombre y un da√±o asociado, ambas guardadas, respectivamente, en los atributos \texttt{nombre} y \texttt{danyo}. Adicionalmente, cada arma guarda un dato espec√≠fico a la misma, el arco contiene el n√∫mero de flechas restante, la espada la resistencia de la misma, y el bast√≥n puntos de magia.
 
-Todos los atributos son protegidos mientras que todos los mÈtodos son p˙blicos. Los mÈtodos get/set establecen o leen el valor del atributo respectivo.
+Todos los atributos son protegidos mientras que todos los m√©todos son p√∫blicos. Los m√©todos get/set establecen o leen el valor del atributo respectivo.
 
 \begin{enumerate}
-\item Implemente la clase \texttt{Arma} dentro del paquete \texttt{p3.armas}. Compruebe su correcto funcionamiento instanciando la clase varias veces e ejecutando los mÈtodos dentro de \texttt{main()}.
-\item Implemente las clases \texttt{Espada}, \texttt{Arco} y \texttt{Baston} dentro del paquete \texttt{p3.armas}. Compruebe su correcto funcionamiento instanciando las clases varias veces e ejecutando los mÈtodos dentro de \texttt{main()}.
-\item Implemente los constructores apropiados de las tres clases anteriores. Suponga que por defecto el arco tiene 10 flechas, la espada 20 puntos de resistencia y el bastÛn 15 puntos de magia. Sugerencia: Utilice un constructor con una llamada explÌcita al construtor de la superclase por medio de la palabra reservada \texttt{super}.
-\item Sobrecargue el mÈtodo \texttt{toString()} en las cuatro clases anteriores de modo que, al ser invocado, devuelva una cadena describiendo la clase en cuestiÛn con todos sus campos. Compruebe su correcto funcionamiento.
-\item Cree un vector \texttt{Arma} conteniendo objetos de tipo \texttt{Espada}, \texttt{Arco} y \texttt{Baston}. Imprima, dentro de un bucle, la descripciÛn de todos los objetos invocando \texttt{toString()} y verifique cÛmo funciona el polimorfismo.
-\item Se quiere implementar un mÈtodo \texttt{usar()}, presente en todas las clases, que imite la utizaciÛn del arma. Su comportamiento cambia en funciÛn de la clase: En la clase \texttt{Arco}, debe reducir en uno el n˙mero de flechas, en \texttt{Espada} reduce la resistencia mientras que en \texttt{Baston} decrementa la magia. Piense quÈ habrÌa que cambiar en la jerarquÌa de clases y discutalo con el profesor antes de implementarlo.
-\item Implemente en mÈtodo \texttt{estaDisponible()}, presente en todas las clases, que devuelve verdadero si el arma est· disponible para el combate o falso en caso contrario. El arma esta disponible si el arco tiene flechas, la espada tiene puntos de resistencia, o el bastÛn tiene puntos de magia. Realice los cambios oportunos en el codigo.
+\item Implemente la clase \texttt{Arma} dentro del paquete \texttt{p3.armas}. Compruebe su correcto funcionamiento instanciando la clase varias veces e ejecutando los m√©todos dentro de \texttt{main()}.
+\item Implemente las clases \texttt{Espada}, \texttt{Arco} y \texttt{Baston} dentro del paquete \texttt{p3.armas}. Compruebe su correcto funcionamiento instanciando las clases varias veces e ejecutando los m√©todos dentro de \texttt{main()}.
+\item Implemente los constructores apropiados de las tres clases anteriores. Suponga que por defecto el arco tiene 10 flechas, la espada 20 puntos de resistencia y el bast√≥n 15 puntos de magia. Sugerencia: Utilice un constructor con una llamada expl√≠cita al construtor de la superclase por medio de la palabra reservada \texttt{super}.
+\item Sobrecargue el m√©todo \texttt{toString()} en las cuatro clases anteriores de modo que, al ser invocado, devuelva una cadena describiendo la clase en cuesti√≥n con todos sus campos. Compruebe su correcto funcionamiento.
+\item Cree un vector \texttt{Arma} conteniendo objetos de tipo \texttt{Espada}, \texttt{Arco} y \texttt{Baston}. Imprima, dentro de un bucle, la descripci√≥n de todos los objetos invocando \texttt{toString()} y verifique c√≥mo funciona el polimorfismo.
+\item Se quiere implementar un m√©todo \texttt{usar()}, presente en todas las clases, que imite la utizaci√≥n del arma. Su comportamiento cambia en funci√≥n de la clase: En la clase \texttt{Arco}, debe reducir en uno el n√∫mero de flechas, en \texttt{Espada} reduce la resistencia mientras que en \texttt{Baston} decrementa la magia. Piense qu√© habr√≠a que cambiar en la jerarqu√≠a de clases y discutalo con el profesor antes de implementarlo.
+\item Implemente en m√©todo \texttt{estaDisponible()}, presente en todas las clases, que devuelve verdadero si el arma est√° disponible para el combate o falso en caso contrario. El arma esta disponible si el arco tiene flechas, la espada tiene puntos de resistencia, o el bast√≥n tiene puntos de magia. Realice los cambios oportunos en el codigo.
 \end{enumerate}
 
 \subsection*{Ejercicio 2}
-Una vez que se han implementado las clases con las armas del juego, se pretende programar las clases que representan a los personajes. Pueden ser tres: Mago, guerrero y ladrÛn. Cada personaje tendr· un arma y podr· luchar con otros personajes. 
+Una vez que se han implementado las clases con las armas del juego, se pretende programar las clases que representan a los personajes. Pueden ser tres: Mago, guerrero y ladr√≥n. Cada personaje tendr√° un arma y podr√° luchar con otros personajes. 
 
 \begin{figure}
   \centering
@@ -147,13 +147,13 @@ Una vez que se han implementado las clases con las armas del juego, se pretende 
   \label{fig:ej2}
 \end{figure}
 
-La figura 2 muestra el diagrama de clases completo a implementar. H·galo siguiendo los siguientes pasos.
+La figura 2 muestra el diagrama de clases completo a implementar. H√°galo siguiendo los siguientes pasos.
 
 \begin{enumerate}
-\item Implemente la clase \texttt{Personaje} dentro del paquete \texttt{p3.personajes}, a excepciÛn de los mÈtodos \texttt{atacar()} y \texttt{luchar()}. El mÈtodo \texttt{estaDerrotado()} devuelve \texttt{true} si el personaje tiene cero o menos PV.
-\item Implemente las clases \texttt{Mago}, \texttt{Guerrero} y \texttt{Ladron}, a excepciÛn de los mÈtodos \texttt{atacar()} y \texttt{luchar()}. Por defecto, el mago tendr· un bastÛn, el ladrÛn un arco y el guerrero una espada, tÈngalo en cuenta a la hora de programar el constructor. Sugerencia: Utilice una llamada al constructor de la superclase por medio de \texttt{super}.
-\item Sobrecargue el mÈtodo \texttt{toString()} en las cuatro clases anteriores para poder visualizar el contenido de los atributos f·cilmente.
-\item El mecanismo de combate es el siguiente. Un combate es una sucesiÛn de ataques, primero ataca quien inicia el combate, despuÈs contrataataca el oponente, y asÌ sucesivamente. El combate comienza invocando al mÈtodo \texttt{combatir()}, cada combatiente ataca por turnos hasta que uno se queda sin PV, en cuyo caso se encuentra derrotado. El ataque se realiza invocando al mÈtodo p˙blico \texttt{atacar()}; al invocarse este mÈtodo se restar· a los PV de cada personaje el daÒo del arma del personaje contrario m·s su destreza. DespuÈs de cada ataque el mago pierde un punto de poder, el guerrero un punto de energÌa y el ladrÛn un punto de energÌa o poder. Si se agota cualquiera de esos elementos la destreza no suma al daÒo ocasionado por el personaje. An·logamente, si el arma no est· disponible (arco sin flechas, espada daÒada o bastÛn sin magia), no se suma al daÒo el efecto del arma.  En cada ataque se invocar· el mÈtodo \texttt{usar()} del arma para que actualice su estado. Implemente los mÈtodos \texttt{combatir()} y \texttt{atacar()}.
+\item Implemente la clase \texttt{Personaje} dentro del paquete \texttt{p3.personajes}, a excepci√≥n de los m√©todos \texttt{atacar()} y \texttt{luchar()}. El m√©todo \texttt{estaDerrotado()} devuelve \texttt{true} si el personaje tiene cero o menos PV.
+\item Implemente las clases \texttt{Mago}, \texttt{Guerrero} y \texttt{Ladron}, a excepci√≥n de los m√©todos \texttt{atacar()} y \texttt{luchar()}. Por defecto, el mago tendr√° un bast√≥n, el ladr√≥n un arco y el guerrero una espada, t√©ngalo en cuenta a la hora de programar el constructor. Sugerencia: Utilice una llamada al constructor de la superclase por medio de \texttt{super}.
+\item Sobrecargue el m√©todo \texttt{toString()} en las cuatro clases anteriores para poder visualizar el contenido de los atributos f√°cilmente.
+\item El mecanismo de combate es el siguiente. Un combate es una sucesi√≥n de ataques, primero ataca quien inicia el combate, despu√©s contrataataca el oponente, y as√≠ sucesivamente. El combate comienza invocando al m√©todo \texttt{combatir()}, cada combatiente ataca por turnos hasta que uno se queda sin PV, en cuyo caso se encuentra derrotado. El ataque se realiza invocando al m√©todo p√∫blico \texttt{atacar()}; al invocarse este m√©todo se restar√° a los PV de cada personaje el da√±o del arma del personaje contrario m√°s su destreza. Despu√©s de cada ataque el mago pierde un punto de poder, el guerrero un punto de energ√≠a y el ladr√≥n un punto de energ√≠a o poder. Si se agota cualquiera de esos elementos la destreza no suma al da√±o ocasionado por el personaje. An√°logamente, si el arma no est√° disponible (arco sin flechas, espada da√±ada o bast√≥n sin magia), no se suma al da√±o el efecto del arma.  En cada ataque se invocar√° el m√©todo \texttt{usar()} del arma para que actualice su estado. Implemente los m√©todos \texttt{combatir()} y \texttt{atacar()}.
 \end{enumerate}
 
 \end{document} 
