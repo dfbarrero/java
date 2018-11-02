@@ -1,6 +1,14 @@
 ## Contents
 
-1.- [Introduction to Python](1-introduction/)
+1.- [Getting started](1-gettingStarted/)
+
+2.- [Language Basics](2-languageBasics/)
+
+3.- [Object-Oriented Programming](3-oop/)
+
+4.- [Object-Oriented Programming in Java](4-oop-java/)
+
+5.- [Java Support Classes](5-classes/)
 
 ## Practical assignments
 
