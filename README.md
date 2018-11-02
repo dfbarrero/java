@@ -22,6 +22,8 @@
 
 * [Práctica 5: Bucle principal de un juego](assignments/p05/p5.pdf)
 
+* [Práctica 6: Patrones de diseño](assignments/p06/p6.pdf)
+
 ## Compilation
 
 Compile slides with xelatex or lualatex. Custom UAH fonts are needed to properly compile the project.
