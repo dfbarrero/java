@@ -1,6 +1,6 @@
 # Customize these two lines
 TARGETS=videojuegos # Courses to compile
-NAME=gettingStarted
+NAME=classes
 
 # Do not touch
 TEX=xelatex -interaction nonstopmode -halt-on-error -file-line-error
