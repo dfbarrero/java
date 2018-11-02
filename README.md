@@ -12,7 +12,15 @@
 
 ## Practical assignments
 
-* [Práctica 1: Ejercicios básicos de Python](assignments/p1.pdf)
+* [Práctica 1: Ejercicios básicos de Java](assignments/p01/p1.pdf)
+
+* [Práctica 2: Introducción a la POO en Java](assignments/p02/p2.pdf)
+
+* [Práctica 3: Herencia y sobrecarga en Java](assignments/p03/p3.pdf)
+
+* [Práctica 4: Excepciones, E/S y colecciones](assignments/p04/p4.pdf)
+
+* [Práctica 5: Bucle principal de un juego](assignments/p05/p5.pdf)
 
 ## Compilation
 
